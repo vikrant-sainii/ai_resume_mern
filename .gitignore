@@ -1,0 +1,26 @@
+# Node modules
+node_modules/
+backend_ai/node_modules/
+mern_ai/node_modules/
+
+# Build files
+dist/
+mern_ai/dist/
+backend_ai/build/
+
+# Uploads & temporary storage
+uploads/
+backend_ai/uploads/
+
+# Environment files
+.env
+.env.local
+backend_ai/.env
+mern_ai/.env
+
+# Vercel & IDE
+.vercel/
+.vscode/
+.idea/
+*.log
+.DS_Store
