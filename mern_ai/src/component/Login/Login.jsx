@@ -18,30 +18,41 @@ const Login = () => {
             const result = await signInWithPopup(auth, provider);
             const user = result.user;
             
-            // Register or login user on backend
-            const res = await axios.post('/api/user', {
-                name: user.displayName,
-                email: user.email,
-                photoUrl: user.photoURL
-            });
-
-            const savedUser = res.data.user || {
+            const initialUser = {
                 _id: user.uid,
-                name: user.displayName,
+                name: user.displayName || "Candidate",
                 email: user.email,
                 photoUrl: user.photoURL
             };
 
-            setUserInfo(savedUser);
-            localStorage.setItem("userInfo", JSON.stringify(savedUser));
+            // Save state immediately so navigation works without waiting on backend
+            setUserInfo(initialUser);
+            localStorage.setItem("userInfo", JSON.stringify(initialUser));
             setLogin(true);
             localStorage.setItem("isLogin", "true");
 
+            // Sync with MongoDB backend asynchronously
+            try {
+                const res = await axios.post('/api/user', {
+                    name: user.displayName,
+                    email: user.email,
+                    photoUrl: user.photoURL
+                });
+
+                if (res.data && res.data.user) {
+                    setUserInfo(res.data.user);
+                    localStorage.setItem("userInfo", JSON.stringify(res.data.user));
+                }
+            } catch (apiErr) {
+                console.warn("Backend user sync warning:", apiErr.message);
+            }
+
             navigate('/dashboard');
         } catch (err) {
-            console.error("Login Error:", err);
-            // Fallback for development if Firebase Popup is blocked or closed
-            alert(err.message || "Failed to sign in with Google.");
+            console.error("Firebase Login Error:", err);
+            if (err.code !== 'auth/popup-closed-by-user') {
+                alert(err.message || "Failed to sign in with Google.");
+            }
         }
     };
 

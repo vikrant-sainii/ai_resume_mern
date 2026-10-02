@@ -9,10 +9,12 @@ const path = require('path');
 require('./conn');
 app.use(express.json());
 
-const allowedOrigin = process.env.FRONTEND_URL || true;
 app.use(cors({
     credentials: true,
-    origin: allowedOrigin
+    origin: (origin, callback) => {
+        // Allow all origins dynamically (reflect requesting origin) for seamless cross-origin requests
+        callback(null, true);
+    }
 }));
 
 const UserRoutes = require('./Routes/user');
