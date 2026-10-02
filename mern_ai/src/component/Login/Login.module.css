@@ -1,52 +1,234 @@
-.Login {
+.LoginWrapper {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(255, 255, 255, 0.2);
-    /* semi-transparent */
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    /* for Safari */
-    border-radius: 10px;
+    background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 25%, #f3e8ff 50%, #fce7f3 75%, #e0f2fe 100%);
+    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    user-select: none;
 }
 
-.loginCard{
-    background-color: black;
+/* Background floating ambient cards */
+.floatingCardTL {
+    position: absolute;
+    top: 8%;
+    left: 6%;
+    width: 250px;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 24px;
     padding: 20px;
-    width: 30%;
-    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(99, 102, 241, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    transform: rotate(-6deg);
+    animation: floatSlow 6s ease-in-out infinite alternate;
+}
+
+.floatingCardTR {
+    position: absolute;
+    top: 12%;
+    right: 7%;
+    width: 220px;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(16px);
+    border-radius: 24px;
+    padding: 20px;
+    box-shadow: 0 20px 40px rgba(99, 102, 241, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    transform: rotate(5deg);
+    animation: floatSlow 7s ease-in-out infinite alternate-reverse;
+}
+
+.floatingCardBL {
+    position: absolute;
+    bottom: 10%;
+    left: 7%;
+    width: 230px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(16px);
+    border-radius: 24px;
+    padding: 20px;
+    box-shadow: 0 20px 40px rgba(99, 102, 241, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    transform: rotate(4deg);
+    animation: floatSlow 8s ease-in-out infinite alternate;
+}
+
+.floatingCardBR {
+    position: absolute;
+    bottom: 8%;
+    right: 6%;
+    width: 250px;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(16px);
+    border-radius: 24px;
+    padding: 20px;
+    box-shadow: 0 20px 40px rgba(99, 102, 241, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    transform: rotate(-5deg);
+    animation: floatSlow 6.5s ease-in-out infinite alternate-reverse;
+}
+
+.skeletonLine {
+    height: 8px;
+    background: rgba(99, 102, 241, 0.15);
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+.skeletonLineShort {
+    width: 60%;
+    height: 8px;
+    background: rgba(99, 102, 241, 0.12);
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+/* Center Glass Card */
+.mainCard {
+    position: relative;
+    z-index: 10;
+    width: 520px;
+    max-width: 90vw;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-radius: 36px;
+    padding: 48px 40px;
+    box-shadow: 0 30px 60px rgba(99, 102, 241, 0.12), 0 10px 20px rgba(0, 0, 0, 0.04), inset 0 1px 2px rgba(255, 255, 255, 0.9);
+    border: 1.5px solid rgba(255, 255, 255, 0.8);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.mainCard:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 35px 70px rgba(99, 102, 241, 0.16), 0 12px 24px rgba(0, 0, 0, 0.05);
+}
+
+/* App Icon Container */
+.iconContainer {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    border-radius: 24px;
+    background: linear-gradient(135deg, #818cf8 0%, #6366f1 50%, #4f46e5 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
     color: white;
+    box-shadow: 0 12px 24px rgba(99, 102, 241, 0.3);
+    margin-bottom: 24px;
 }
 
-.loginCardTitle{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-}
-
-.googleBtn{
-    padding: 20px;
-    box-sizing: border-box;
-    width: 100%;
-    background-color: white;
-    color: black;
-    border-radius: 30px;
-    font-size: 22px;
+.sparkleBadge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    color: #818cf8;
+    background: white;
+    border-radius: 50%;
+    padding: 4px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 20px;
-    cursor: pointer;
 }
 
-@media screen and (max-width:780px){
-    .loginCard{
-        width: 80%;
+/* Card Heading */
+.title {
+    font-size: 38px;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 12px 0;
+    letter-spacing: -0.8px;
+}
+
+.gradientText {
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+    font-size: 16px;
+    color: #475569;
+    line-height: 1.6;
+    margin: 0 0 36px 0;
+    max-width: 380px;
+    font-weight: 500;
+}
+
+/* Sign In Button */
+.googlePillBtn {
+    width: 100%;
+    max-width: 380px;
+    height: 60px;
+    background: #ffffff;
+    border-radius: 30px;
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06), 0 2px 4px rgba(0, 0, 0, 0.02);
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.googlePillBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 35px rgba(99, 102, 241, 0.15), 0 4px 8px rgba(0, 0, 0, 0.04);
+    border-color: #cbd5e1;
+}
+
+.googlePillBtn:active {
+    transform: translateY(0);
+}
+
+.btnContent {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.btnText {
+    font-size: 17px;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.arrowIcon {
+    color: #334155;
+    transition: transform 0.2s ease;
+}
+
+.googlePillBtn:hover .arrowIcon {
+    transform: translateX(4px);
+}
+
+/* Animations */
+@keyframes floatSlow {
+    0% { transform: translateY(0px) rotate(0deg); }
+    100% { transform: translateY(-15px) rotate(2deg); }
+}
+
+@media screen and (max-width: 768px) {
+    .floatingCardTL, .floatingCardTR, .floatingCardBL, .floatingCardBR {
+        display: none;
+    }
+    .mainCard {
+        padding: 36px 24px;
+    }
+    .title {
+        font-size: 30px;
     }
 }
