@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
-const MONGODB_URI = process.env.MONGODB_URI || process.env.MONGO_URI || 'Add your own Connection URL';
+let rawURI = process.env.MONGODB_URI || process.env.MONGO_URI || 'Add your own Connection URL';
+const MONGODB_URI = rawURI.replace(/<([^>]+)>/g, '$1');
 
 let isConnected = false;
 
